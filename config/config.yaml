@@ -1,0 +1,56 @@
+# Model configuration
+model:
+  name: "deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
+  dtype: "bfloat16"
+  device_map: "auto"
+
+# Dataset configuration
+datasets:
+  gsm8k:
+    name: "gsm8k"
+    subset: "main"
+  math500:
+    name: "hendrycks/competition_math"
+    subset: "all"
+
+# Output directories (override via CLI or env vars for Nautilus PVC mounts)
+output:
+  traces_dir: "outputs/traces"
+  directions_dir: "outputs/directions"
+  probe_dir: "outputs/probes"
+  eval_dir: "outputs/eval"
+
+# Activation extraction
+extraction:
+  layers_to_skip_first: 6
+  layers_to_skip_last: 6
+  # Layers to steer: indices from layers_to_skip_first to (n_layers - layers_to_skip_last - 1)
+
+# Steering hyperparameters
+steering:
+  default_lambda: -1.0          # negative = suppress reflection-like activations
+  max_new_tokens: 8192
+
+# Reflection detection keywords (case-sensitive)
+reflection:
+  keywords:
+    - "Wait"
+    - "Hmm"
+    - "Let me reconsider"
+    - "Let me think"
+    - "Actually"
+    - "wait"
+    - "Hmm,"
+    - "Wait,"
+
+# Generation settings
+generation:
+  max_new_tokens: 8192
+  do_sample: false
+  temperature: 1.0
+
+# Probe training
+probe:
+  max_iter: 1000
+  C: 1.0
+  solver: "lbfgs"
