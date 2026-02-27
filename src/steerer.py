@@ -159,7 +159,6 @@ def generate_baseline(
             do_sample=False,
             pad_token_id=tokenizer.pad_token_id,
             eos_token_id=tokenizer.eos_token_id,
-            repetition_penalty=1.1,
         )
 
     # Decode only the newly generated part
