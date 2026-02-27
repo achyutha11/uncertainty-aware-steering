@@ -119,10 +119,6 @@ def main():
         correct = is_correct(response, gold)
         n_correct += int(correct)
 
-        # Store token IDs for efficient re-extraction later
-        full_text = prompt + response
-        token_ids = tokenizer.encode(full_text, add_special_tokens=False)
-
         trace = {
             "idx": i,
             "question": question,
@@ -130,7 +126,6 @@ def main():
             "prompt": prompt,
             "response": response,
             "correct": correct,
-            "token_ids": token_ids,
         }
         traces.append(trace)
 
