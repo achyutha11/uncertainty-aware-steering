@@ -155,8 +155,11 @@ def generate_baseline(
         output_ids = model.generate(
             input_ids,
             max_new_tokens=max_new_tokens,
+            max_length=input_ids.shape[1] + max_new_tokens,
             do_sample=False,
             pad_token_id=tokenizer.pad_token_id,
+            eos_token_id=tokenizer.eos_token_id,
+            repetition_penalty=1.1,
         )
 
     # Decode only the newly generated part
